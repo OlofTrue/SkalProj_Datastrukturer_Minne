@@ -239,7 +239,6 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
-
             Console.Clear();
             string input = "";
             while (true)
@@ -271,6 +270,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             static bool IsWellFormated(string str)
             {
+                int balaceParanthesis = 0;
                 var theStack = new Stack<char>();
                 foreach (var c in str)
                 {
@@ -280,24 +280,29 @@ namespace SkalProj_Datastrukturer_Minne
                         case '{':
                         case '[':
                             theStack.Push(c);
+                            balaceParanthesis++;
                             break;
 
                         case ')':
+                            balaceParanthesis--;
                             if (theStack.Count<1 || theStack.Pop() != '(') return false;
                             break;
 
                         case '}':
+                            balaceParanthesis--;
                             if (theStack.Count < 1 || theStack.Pop() != '{') return false;
                             break;
 
 
                         case ']':
+                            balaceParanthesis--;
                             if (theStack.Count < 1 || theStack.Pop() != '[') return false;
                             break;
                     }
 
                 }
-                return true;
+                if (balaceParanthesis==0) return true;
+                return false;
             }
 
         }
