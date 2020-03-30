@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -72,12 +74,49 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            var theList = new List<string>();
+            Console.Clear();
+            while (true)
+            {
+                string input = "";
+                Console.WriteLine($"Count: {theList.Count}");
+                Console.WriteLine($"Capacity: {theList.Capacity}");
+                Console.WriteLine();
+                Console.WriteLine("Please enter: +<word> to Add word, +<word> to Remove word or 0 to Exit to main");
+                try
+                {
+                    input = Console.ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please enter some valid input!");
+                }
+                char nav = input[0];
+                string word = input.Substring(1).Trim();
+                Console.Clear();
 
-            //switch(nav){...}
+                switch (nav)
+                {
+                    case '+':
+                        if (word.Length > 0) theList.Add(word);
+                        break;
+
+                    case '-':
+                        if (word.Length > 0) theList.Remove(word);
+                        break;
+
+                    case '0':
+                        Console.Clear();
+                        return;
+                    //break;
+
+                    default:
+                        Console.WriteLine("Please enter some valid input (use only + or -)");
+                        break;
+                }
+            }
+
         }
 
         /// <summary>
@@ -90,6 +129,50 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            var theQueue = new Queue<string>();
+            Console.Clear();
+            while (true)
+            {
+                string input = "";
+                Console.WriteLine($"Count: {theQueue.Count}");
+                Console.WriteLine($"Queue: {string.Join(" ,", theQueue.ToArray())}");
+                Console.WriteLine();
+                Console.WriteLine("Please enter: +<element> to Add element, + to Remove element or 0 to Exit to main");
+                try
+                {
+                    input = Console.ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please enter some valid input!");
+                }
+                char nav = input[0];
+                string word = input.Substring(1).Trim();
+                Console.Clear();
+
+                switch (nav)
+                {
+                    case '+':
+                        if (word.Length > 0) theQueue.Enqueue(word);
+                        break;
+
+                    case '-':
+                        theQueue.Dequeue();
+                        break;
+
+                    case '0':
+                        Console.Clear();
+                        return;
+                    //break;
+
+                    default:
+                        Console.WriteLine("Please enter some valid input (use only + or -)");
+                        break;
+                }
+            }
+
         }
 
         /// <summary>
@@ -97,12 +180,56 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineStack()
         {
+
             /*
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+
+            Console.Clear();
+            string input = "";
+            while (true)
+            {
+                Console.WriteLine($"Input: {input}, Reverse: {ReverseText(input)}");
+
+                Console.WriteLine();
+                Console.WriteLine("Please enter a string or 0 to Exit to main:");
+                try
+                {
+                    input = Console.ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please enter some valid input!");
+                }
+
+                string word = input.Trim();
+                Console.Clear();
+
+                if (word == "0")
+                {
+                    Console.Clear();
+                    return;
+                }
+            }
+
+            static string ReverseText(string str)
+            {
+                string strRev = "";
+                var theStack = new Stack<char>();
+                foreach (var c in str) theStack.Push(c);
+                while (theStack.Count > 0)
+                {
+                    strRev += theStack.Pop().ToString();
+                }
+                return strRev;
+            }
+
         }
+
 
         static void CheckParanthesis()
         {
@@ -112,8 +239,133 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+
+            Console.Clear();
+            string input = "";
+            while (true)
+            {
+                var testStr = (IsWellFormated(input)) ? "OK" : "Wrong";
+                Console.WriteLine($"Input: {input}, Well-formed: {testStr}");
+
+                Console.WriteLine();
+                Console.WriteLine("Please enter a [string] to check paranthesis or [0] to Exit to main:");
+                try
+                {
+                    input = Console.ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please enter some valid input!");
+                }
+
+                string word = input.Trim();
+                Console.Clear();
+
+                if (word == "0")
+                {
+                    Console.Clear();
+                    return;
+                }
+            }
+
+            static bool IsWellFormated(string str)
+            {
+                var theStack = new Stack<char>();
+                foreach (var c in str)
+                {
+                    switch (c)
+                    {
+                        case '(':
+                        case '{':
+                        case '[':
+                            theStack.Push(c);
+                            break;
+
+                        case ')':
+                            if (theStack.Pop() != '(') return false;
+                            break;
+
+                        case '}':
+                            if (theStack.Pop() != '{') return false;
+                            break;
+
+
+                        case ']':
+                            if (theStack.Pop() != '[') return false;
+                            break;
+                    }
+
+                }
+                return true;
+            }
+
         }
 
     }
 }
+
+/*
+
+0.1) 
+stack - enkel direkt lagring i minnet sist in först ut, med snabb access, närmaste block nästa att användas/tas bort genom att flytta pekaren
+
+heap - trädliknande struktur där varje element hanteras/lagras oberoende av varandra mha egna pekare.kräver en speciell garbage collenction
+
+0.2)
+Value Type variables lagras i stacken och har direkt minnesallokering.
+
+Reference Type lagras i heap och har indirekt minnesallokering (via pekare).
+
+0.3)
+i.är av value-type och x påverkas inte efter initial tilldelning
+ii.är av reference type och x pekar på samma värde som y, dvs 4
+
+
+1.2) antalet element överstiger kapacitet
+
+1.3) kapacitet dubblas
+
+1.4) vore ineffektivt?
+
+1.5) nej
+
+1.6) om max-antalet element är stabilt och prestanda viktigt
+
+
+2.1) 
+a) Kö={} 
+b) Kö={-> Kalle}  
+c) Kö={-> Greta,Kalle}  
+d) Kö={Greta}-> Kalle
+e) Kö={-> Stina,Greta}  
+f) Kö={Stina}-> Greta
+g) Kö={-> Olle,Stina}  
+
+
+3.1) 
+a) Kö=				{} 
+b) Kö=		{-> Kalle}  
+c) Kö={-> Greta,Kalle}  
+d) Kö=Greta<- {Kalle}  
+e) Kö={-> Stina,Kalle}  
+f) Kö=Stina<- {Kalle}
+g) Kö= {-> Olle,Kalle}  
+
+kalle som kom först riskerar att bli fast i kön länge(tills han är ensam kvar)
+
+4.1) Stack
+
+ok
+([{}]({}))
+
+wrong
+({)}
+
+ok
+List<int> lista = new List<int>() { 2, 3, 4 };
+
+*/
+
+
 
