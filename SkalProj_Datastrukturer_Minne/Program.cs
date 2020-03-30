@@ -283,16 +283,16 @@ namespace SkalProj_Datastrukturer_Minne
                             break;
 
                         case ')':
-                            if (theStack.Pop() != '(') return false;
+                            if (theStack.Count<1 || theStack.Pop() != '(') return false;
                             break;
 
                         case '}':
-                            if (theStack.Pop() != '{') return false;
+                            if (theStack.Count < 1 || theStack.Pop() != '{') return false;
                             break;
 
 
                         case ']':
-                            if (theStack.Pop() != '[') return false;
+                            if (theStack.Count < 1 || theStack.Pop() != '[') return false;
                             break;
                     }
 
