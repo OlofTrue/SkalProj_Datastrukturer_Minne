@@ -159,7 +159,7 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
 
                     case '-':
-                        if (theQueue.Count>0) theQueue.Dequeue();
+                        if (theQueue.Count > 0) theQueue.Dequeue();
                         break;
 
                     case '0':
@@ -270,38 +270,55 @@ namespace SkalProj_Datastrukturer_Minne
 
             static bool IsWellFormated(string str)
             {
+                var charOpener = new Dictionary<char, char>()
+                {
+                    { ')','(' },
+                    { '}','{' },
+                    { ']','[' }
+                };
                 int balaceParanthesis = 0;
                 var theStack = new Stack<char>();
                 foreach (var c in str)
                 {
-                    switch (c)
+                    if (charOpener.ContainsKey(c))
                     {
-                        case '(':
-                        case '{':
-                        case '[':
+                        balaceParanthesis--;
+                        if (theStack.Count < 1 || theStack.Pop() != charOpener[c]) return false;
+                    }
+                    else
+                    {
+                        if (charOpener.ContainsValue(c))
+                        {
                             theStack.Push(c);
                             balaceParanthesis++;
-                            break;
-
-                        case ')':
-                            balaceParanthesis--;
-                            if (theStack.Count<1 || theStack.Pop() != '(') return false;
-                            break;
-
-                        case '}':
-                            balaceParanthesis--;
-                            if (theStack.Count < 1 || theStack.Pop() != '{') return false;
-                            break;
-
-
-                        case ']':
-                            balaceParanthesis--;
-                            if (theStack.Count < 1 || theStack.Pop() != '[') return false;
-                            break;
+                        }
                     }
+                    //switch (c)
+                    //{
+                    //    case '(':
+                    //    case '{':
+                    //    case '[':
+
+
+                    //    case ')':
+                    //        balaceParanthesis--;
+                    //        if (theStack.Count<1 || theStack.Pop() != '(') return false;
+                    //        break;
+
+                    //    case '}':
+                    //        balaceParanthesis--;
+                    //        if (theStack.Count < 1 || theStack.Pop() != '{') return false;
+                    //        break;
+
+
+                    //    case ']':
+                    //        balaceParanthesis--;
+                    //        if (theStack.Count < 1 || theStack.Pop() != '[') return false;
+                    //        break;
+                    //}
 
                 }
-                if (balaceParanthesis==0) return true;
+                if (balaceParanthesis == 0) return true;
                 return false;
             }
 
@@ -370,7 +387,17 @@ wrong
 ok
 List<int> lista = new List<int>() { 2, 3, 4 };
 
-*/
+wrong
+)
+
+wrong
+(
+
+wrong
+()[
+
+
+ */
 
 
 
