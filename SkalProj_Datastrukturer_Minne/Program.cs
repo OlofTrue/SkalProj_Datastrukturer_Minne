@@ -159,7 +159,7 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
 
                     case '-':
-                        theQueue.Dequeue();
+                        if (theQueue.Count>0) theQueue.Dequeue();
                         break;
 
                     case '0':
