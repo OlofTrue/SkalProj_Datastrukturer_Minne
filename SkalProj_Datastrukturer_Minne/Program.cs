@@ -279,14 +279,9 @@ namespace SkalProj_Datastrukturer_Minne
                 var theStack = new Stack<char>();
                 foreach (var c in str)
                 {
-                    if (charOpener.ContainsKey(c))
-                    {
-                        if (theStack.Count < 1 || theStack.Pop() != charOpener[c]) return false;
-                    }
-                    else
-                    {
-                        if (charOpener.ContainsValue(c)) theStack.Push(c);
-                    }
+                    if (charOpener.ContainsValue(c)) theStack.Push(c);
+                    if (charOpener.ContainsKey(c) && (theStack.Count < 1 || theStack.Pop() != charOpener[c])) return false;
+
                     //switch (c)
                     //{
                     //    case '(':
