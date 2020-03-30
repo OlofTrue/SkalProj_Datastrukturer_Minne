@@ -276,22 +276,16 @@ namespace SkalProj_Datastrukturer_Minne
                     { '}','{' },
                     { ']','[' }
                 };
-                int balaceParanthesis = 0;
                 var theStack = new Stack<char>();
                 foreach (var c in str)
                 {
                     if (charOpener.ContainsKey(c))
                     {
-                        balaceParanthesis--;
                         if (theStack.Count < 1 || theStack.Pop() != charOpener[c]) return false;
                     }
                     else
                     {
-                        if (charOpener.ContainsValue(c))
-                        {
-                            theStack.Push(c);
-                            balaceParanthesis++;
-                        }
+                        if (charOpener.ContainsValue(c)) theStack.Push(c);
                     }
                     //switch (c)
                     //{
@@ -318,8 +312,7 @@ namespace SkalProj_Datastrukturer_Minne
                     //}
 
                 }
-                if (balaceParanthesis == 0) return true;
-                return false;
+                return (theStack.Count == 0);
             }
 
         }
